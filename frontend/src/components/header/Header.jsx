@@ -1,15 +1,31 @@
-import { AppBar, Toolbar, styled, Box, Typography } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  Typography,
+  IconButton,
+  Drawer,
+  styled,
+} from "@mui/material";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
 import Search from "./Search";
 import CustomButtons from "./CustomButtons";
+import { Link } from "react-router-dom";
+import { Menu } from "@mui/icons-material";
+import { useState } from "react";
 
 const StyledHeader = styled(AppBar)`
   background: #2874f0;
   height: 55px;
+  box-shadow: none;
 `;
 
-const Component = styled(Box)`
+const Component = styled(Link)`
   margin-left: 12%;
   line-height: 0;
+  text-decoration: none;
+  color: inherit;
 `;
 
 const SubHeading = styled(Typography)`
@@ -23,19 +39,58 @@ const PlusImage = styled("img")({
   marginLeft: "4px",
 });
 
-const CustomButtonWrapper = styled(Box)`
-  margin: 0 5% 0 auto;
-`;
+const CustomButtonWrapper = styled("span")(({ theme }) => ({
+  margin: "0 5% 0 auto",
+  [theme.breakpoints.down("lg")]: {
+    display: "none",
+  },
+}));
+
+const MenuButton = styled(IconButton)(({ theme }) => ({
+  display: "none",
+  [theme.breakpoints.down("lg")]: {
+    display: "block",
+  },
+}));
 
 const Header = () => {
   const LOGO_URL =
     "https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/flipkart-plus_8d85f4.png";
   const SUB_URL =
     "https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/plus_aef861.png";
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpenDrawer = () => {
+    setOpen(true);
+  };
+
+  const handleCloseDrawer = () => {
+    setOpen(false);
+  };
+
+  const list = () => {
+    return (
+      <Box style={{ width: 200 }} onClick={handleCloseDrawer}>
+        <List>
+          <ListItem button>
+            <CustomButtons />
+          </ListItem>
+        </List>
+      </Box>
+    );
+  };
+
   return (
     <StyledHeader>
       <Toolbar style={{ minHeight: "55px" }}>
-        <Component>
+        <MenuButton color="inherit" onClick={handleOpenDrawer}>
+          <Menu />
+        </MenuButton>
+        <Drawer open={open} onClose={handleCloseDrawer}>
+          {list()}
+        </Drawer>
+        <Component to="/">
           <img src={LOGO_URL} alt="logo" style={{ width: 75 }} />
           <Box style={{ display: "flex" }}>
             <SubHeading>
