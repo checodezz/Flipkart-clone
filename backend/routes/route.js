@@ -6,5 +6,5 @@ const router = express.Router();
 router.post("/signup", userSignup);
 router.post("/login", userLogin);
 router.get("/products", getProducts);
-router.get("/product/:id", getProductById)
+router.get("/productDetail/:id", getProductById)
 export default router;

@@ -2,6 +2,8 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Countdown from "react-countdown";
 import { Box, Typography, Button, Divider, styled } from "@mui/material";
+import { Link } from "react-router-dom";
+
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -17,6 +19,7 @@ const responsive = {
   },
 };
 
+// Styling for the main component
 const Component = styled(Box)`
   margin-top: 10px;
   background-color: #ffffff;
@@ -49,15 +52,32 @@ const ViewAllButton = styled(Button)`
   font-weight: 600;
 `;
 
+const ProductContainer = styled(Box)`
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  text-align: center;
+  box-sizing: border-box;
+`;
+
+// Styling for the product image
 const Image = styled("img")({
   width: "auto",
   height: 150,
+  marginBottom: "10px", // Space between image and text
 });
 
+// Styling for product text
 const Text = styled(Typography)`
   font-size: 14px;
   margin-top: 5px;
+  line-height: 1.5;
+  word-wrap: break-word; // To prevent overflow of long text
 `;
+
 const Slide = ({ products, title, timer }) => {
   const renderer = ({ hours, minutes, seconds }) => {
     return (
@@ -82,7 +102,12 @@ const Slide = ({ products, title, timer }) => {
           </Timer>
         )}
         <ViewAllButton variant="contained" color="primary">
-          View All
+          <Link
+            to="/products"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            View All
+          </Link>
         </ViewAllButton>
       </Deal>
       <Divider />
@@ -100,23 +125,26 @@ const Slide = ({ products, title, timer }) => {
         containerClass="carousel-container"
       >
         {products.map((product) => (
-          <Box
-            key={product.id}
-            textAlign="center"
-            style={{ padding: "25px 15px" }}
+          <Link
+            key={product._id}
+            to={`productDetail/${product._id}`}
+            style={{ textDecoration: "none" }}
           >
-            <Image src={product.url} alt="product" />
-            <Text style={{ fontWeight: 600, color: "#212121" }}>
-              {product.title.shortTitle}
-            </Text>
-            <Text style={{ color: "green" }}>{product.discount}</Text>
-            <Text style={{ color: " #212121", opacity: 0.6 }}>
-              {product.tagline}
-            </Text>
-          </Box>
+            <ProductContainer>
+              <Image src={product.url} alt="product" />
+              <Text style={{ fontWeight: 600, color: "#212121" }}>
+                {product.title.shortTitle}
+              </Text>
+              <Text style={{ color: "green" }}>{product.discount}</Text>
+              <Text style={{ color: " #212121", opacity: 0.6 }}>
+                {product.tagline}
+              </Text>
+            </ProductContainer>
+          </Link>
         ))}
       </Carousel>
     </Component>
   );
 };
+
 export default Slide;
