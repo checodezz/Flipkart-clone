@@ -43,8 +43,6 @@ const Search = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  console.log(products);
-
   const getText = (text) => {
     setText(text);
   };
