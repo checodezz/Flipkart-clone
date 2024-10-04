@@ -52,6 +52,7 @@ const Slide = ({ products, title, timer }) => {
       <hr className="border-t" />
       {/* Product Carousel */}
       <Carousel
+        carouselState="active"
         responsive={responsive}
         swipeable={false}
         draggable={false}

@@ -47,20 +47,21 @@ const cartSlice = createSlice({
             const { productId, actionType } = action.payload;
             const cartItem = state.cartItems.find((item) => item.product._id === productId);
 
-            if (cartItem) {
-                if (actionType === 'plus') {
+            if (actionType === 'plus') {
+                if (cartItem) {
                     cartItem.quantity += 1;
-                } else if (actionType === 'minus' && cartItem.quantity > 1) {
-                    cartItem.quantity -= 1;
+                } else {
+                    state.cartItems.push({
+                        product: { _id: productId }, // Temporary product data, backend will send full details
+                        quantity: 1,
+                    });
                 }
-            } else {
-                state.cartItems.push({
-                    product: { _id: productId }, // Temporary product data, backend will send full details
-                    quantity: 1,
-                });
+            } else if (actionType === 'minus' && cartItem && cartItem.quantity > 1) {
+                cartItem.quantity -= 1;
+            } else if (actionType === 'remove') {
+                // Remove the item from the cartItems array
+                state.cartItems = state.cartItems.filter(item => item.product._id !== productId);
             }
-            console.log(JSON.stringify(cartItem))
-
         },
         revertUpdate(state, action) {
             // If the API call fails, revert the cart item to its previous state

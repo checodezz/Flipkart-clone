@@ -46,6 +46,7 @@ const Banner = () => {
   return (
     <div className="relative">
       <Carousel
+        carouselstate="active"
         responsive={responsive}
         swipeable={false}
         draggable={false}
