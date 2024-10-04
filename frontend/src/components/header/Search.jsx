@@ -15,7 +15,7 @@ const SearchContainer = styled(Box)`
 const InputSearchBase = styled(InputBase)`
   padding-left: 20px;
   width: 100%;
-  font-size: unset;
+  font-size: 13px;
 `;
 
 const SearchIconWrapper = styled(Box)`
@@ -54,7 +54,7 @@ const Search = () => {
         onChange={(e) => getText(e.target.value)}
       />
       <SearchIconWrapper>
-        <SearchIcon fontSize="medium" />
+        <SearchIcon fontSize="small" />
       </SearchIconWrapper>
 
       {text && (
@@ -64,7 +64,7 @@ const Search = () => {
               product.title.longTitle.toLowerCase().includes(text.toLowerCase())
             )
             .map((product) => (
-              <ListItem>
+              <ListItem key={product._id}>
                 <Link
                   to={`productDetail/${product._id}`}
                   onClick={() => setText("")}

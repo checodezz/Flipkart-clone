@@ -5,6 +5,7 @@ const url = "http://localhost:3000"
 
 export const fetchProductsById = createAsyncThunk("products/fetchProductsById", async (productId) => {
     const response = await axios.get(`${url}/productDetail/${productId}`);
+    console.log(response.data);
     return response.data
 })
 

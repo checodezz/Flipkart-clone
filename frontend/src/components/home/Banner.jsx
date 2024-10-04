@@ -1,7 +1,5 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-
-import { styled } from "@mui/material";
 import { bannerData } from "../../constants/data";
 
 const responsive = {
@@ -19,33 +17,58 @@ const responsive = {
   },
 };
 
-const Image = styled("img")(({ theme }) => ({
-  width: "100%",
-  height: 280,
-  [theme.breakpoints.down("md")]: {
-    objectFit: "cover",
-    height: 180,
-  },
-}));
+// Custom left arrow
+const CustomLeftArrow = ({ onClick }) => {
+  return (
+    <button
+      className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white shadow-lg w-10 h-24 flex items-center justify-center text-black text-2xl hover:bg-gray-100 border-none"
+      onClick={onClick}
+    >
+      &#8249; {/* Left arrow symbol */}
+    </button>
+  );
+};
 
+// Custom right arrow
+const CustomRightArrow = ({ onClick }) => {
+  return (
+    <button
+      className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white shadow-lg w-10 h-24 flex items-center justify-center text-black text-2xl hover:bg-gray-100 border-none"
+      onClick={onClick}
+    >
+      &#8250; {/* Right arrow symbol */}
+    </button>
+  );
+};
+
+// Banner component
 const Banner = () => {
   return (
-    <Carousel
-      responsive={responsive}
-      swipeable={false}
-      draggable={false}
-      infinite={true}
-      autoPlay={true}
-      autoPlaySpeed={4000}
-      slidesToSlide={1}
-      dotListClass="custom-dot-list-style"
-      itemClass="carousel-item-padding-40-px"
-      containerClass="carousel-container"
-    >
-      {bannerData.map((data) => (
-        <Image key={data.id} src={data.url} alt="banner" />
-      ))}
-    </Carousel>
+    <div className="relative">
+      <Carousel
+        responsive={responsive}
+        swipeable={false}
+        draggable={false}
+        infinite={true}
+        autoPlay={true}
+        autoPlaySpeed={4000}
+        slidesToSlide={1}
+        dotListClass="custom-dot-list-style"
+        itemClass="carousel-item-padding-40-px"
+        containerClass="carousel-container"
+        customLeftArrow={<CustomLeftArrow />}
+        customRightArrow={<CustomRightArrow />}
+      >
+        {bannerData.map((data) => (
+          <img
+            key={data.id}
+            src={data.url}
+            alt="banner"
+            className="w-full h-72 object-cover" // Tailwind classes for image styling
+          />
+        ))}
+      </Carousel>
+    </div>
   );
 };
 
