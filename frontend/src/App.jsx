@@ -8,6 +8,7 @@ import { Box } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Footer from "./components/home/Footer";
 import Cart from "./components/cart/Cart";
+import Wishlist from "./components/wishlist/Wishlist";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/productDetail/:id" element={<DetailView />} />
             <Route path="/products" element={<AllProducts />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/wishlist" element={<Wishlist />} />
           </Routes>
         </Box>
         <Footer />

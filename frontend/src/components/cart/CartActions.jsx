@@ -6,6 +6,7 @@ import {
   updateCart,
 } from "../../redux/features/cart/cartSlice";
 import { useEffect } from "react";
+import { enqueueSnackbar } from "notistack";
 
 const CartActions = ({ productId, quantity }) => {
   const dispatch = useDispatch();
@@ -22,6 +23,10 @@ const CartActions = ({ productId, quantity }) => {
   const handleRemoveItem = (productId) => {
     dispatch(optimisticUpdate({ productId, actionType: "remove" }));
     dispatch(removeCart(productId));
+    enqueueSnackbar("Item removed from cart", {
+      variant: "error",
+      autoHideDuration: 1000,
+    });
   };
 
   return (

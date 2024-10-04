@@ -87,12 +87,12 @@ const Filters = ({
           valueLabelDisplay="on"
           max={maxPrice}
         />
-        <div className="flex justify-between text-sm mt-1">
-          <span className="border border-gray-300 bg-gray-100 px-6 py-1 ">
+        <div className="flex justify-between items-center text-sm mt-1">
+          <span className="border border-gray-300 bg-gray-100 px-2 py-1 flex-1 mr-2 md:mr-1 text-center">
             ₹{minPrice}
           </span>
-          <span className="mt-1 text-gray-500">to</span>
-          <span className="border border-gray-300 bg-gray-100 px-6 py-1 ">
+          <span className="mt-1 text-gray-500 flex-none">to</span>
+          <span className="border border-gray-300 bg-gray-100 px-2 py-1 flex-1 ml-2 md:ml-1 text-center">
             ₹{maxPrice}
           </span>
         </div>

@@ -107,7 +107,7 @@ const AllProducts = () => {
                   className="mb-4 h-48 px-8 object-contain"
                 />
                 {/* Product Title */}
-                <p className="text-base font-medium mb-2 hover:text-blue-500">
+                <p className="text-base font-normal mb-2 hover:text-blue-500">
                   {product.title.longTitle}
                 </p>
                 {/* Product Ratings */}

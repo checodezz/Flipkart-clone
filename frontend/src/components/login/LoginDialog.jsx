@@ -1,84 +1,7 @@
 import { useState, useContext } from "react";
-import { Height, Password, ShuffleOnSharp } from "@mui/icons-material";
-import {
-  Box,
-  Dialog,
-  TextField,
-  Typography,
-  Button,
-  styled,
-} from "@mui/material";
-
+import { Dialog } from "@mui/material"; // Keep this for Dialog usage
 import { authenticateSignup, authenticateLogin } from "../../service/api";
 import { DataContext } from "../../context/DataProvider";
-const Component = styled(Box)`
-  height: 75vh;
-  width: 90vh;
-`;
-
-const Image = styled(Box)`
-  background: #2874f0
-    url(https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/login_img_c4a81e.png)
-    center 85% no-repeat;
-  height: 83%;
-  width: 28%;
-  padding: 45px 35px;
-  & > p,
-  & h5 {
-    color: #ffff;
-    font-weight: 600;
-  }
-`;
-
-const Wrapper = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  padding: 25px 35px;
-  flex: 1;
-  & > div,
-  & > button,
-  & > p {
-    margin-top: 20px;
-  }
-`;
-
-const LoginButton = styled(Button)`
-  text-transform: none;
-  background: #fb641b;
-  color: #ffff;
-  height: 48px;
-  border-radius: 2px;
-`;
-
-const RequestOTP = styled(Button)`
-  text-transform: none;
-  background: #fff;
-  color: #2874f0;
-  height: 48px;
-  border-radius: 2px;
-  box-shadow: 0 2px 4px 0 rgb(0 0 0/20%);
-`;
-
-const Text = styled(Typography)`
-  font-size: 12px;
-  color: #878787;
-`;
-
-const CreateAccount = styled(Typography)`
-  font-size: 14px;
-  text-align: center;
-  color: #2874f0;
-  font-weight: 600;
-  cursor: pointer;
-`;
-
-const Error = styled(Typography)`
-  font-size: 10px;
-  color: #ff6161;
-  line-height: 0;
-  margin-top: 10px;
-  font-weight: 600;
-`;
 
 const accountInitialValues = {
   login: {
@@ -150,92 +73,116 @@ const LoginDialog = ({ open, setOpen }) => {
       setError(true);
     }
   };
+
   return (
     <Dialog
       open={open}
       onClose={handleClose}
       PaperProps={{ sx: { maxWidth: "unset" } }}
     >
-      <Component>
-        <Box style={{ display: "flex", height: "100%" }}>
-          <Image>
-            <Typography variant="h5">{account.heading}</Typography>
-            <Typography style={{ marginTop: "20px" }}>
-              {account.subHeading}
-            </Typography>
-          </Image>
+      <div className="flex h-[65vh] w-[90vh]">
+        <div className="bg-[#2874f0] bg-[url('https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/login_img_c4a81e.png')] bg-center bg-no-repeat bg-[85%] h-[100%] w-[38%] p-[20px]">
+          <h5 className="text-white font-semibold text-xl">
+            {account.heading}
+          </h5>
+          <p className="mt-5 text-white">{account.subHeading}</p>
+        </div>
 
-          {account.view === "login" ? (
-            <Wrapper>
-              <TextField
-                variant="standard"
-                label="Enter Username"
-                name="username"
-                onChange={(e) => onValueChange(e)}
-              />
-              {error && (
-                <Error>Please enter valid username and password.</Error>
-              )}
-              <TextField
-                variant="standard"
-                name="password"
-                label="Enter Password"
-                onChange={(e) => onValueChange(e)}
-              />
-              <Text>
-                By continuing, you agree to Flipkart's Terms of Use and Privacy{" "}
-                Policy.
-              </Text>
-              <LoginButton onClick={() => loginUser()}>Login</LoginButton>
-              <Typography style={{ textAlign: "center" }}>OR</Typography>
-              <RequestOTP>Request OTP</RequestOTP>
-              <CreateAccount onClick={() => toggleSignUp()}>
-                New to Flipkart? Create an account
-              </CreateAccount>
-            </Wrapper>
-          ) : (
-            <Wrapper>
-              <TextField
-                variant="standard"
-                name="firstname"
-                onChange={(e) => onInputChange(e)}
-                label="Enter Firstname"
-              />
-              <TextField
-                variant="standard"
-                name="lastname"
-                onChange={(e) => onInputChange(e)}
-                label="Enter Lastname"
-              />
-              <TextField
-                variant="standard"
-                name="username"
-                onChange={(e) => onInputChange(e)}
-                label="Enter Username"
-              />
-              <TextField
-                variant="standard"
-                name="email"
-                onChange={(e) => onInputChange(e)}
-                label="Enter Email"
-              />
-              <TextField
-                variant="standard"
-                name="password"
-                onChange={(e) => onInputChange(e)}
-                label="Enter Password"
-              />
-              <TextField
-                variant="standard"
-                name="phone"
-                onChange={(e) => onInputChange(e)}
-                label="Enter Phone"
-              />
-              <LoginButton onClick={() => signupUser()}>Continue</LoginButton>
-            </Wrapper>
-          )}
-        </Box>
-      </Component>
+        {account.view === "login" ? (
+          <div className="flex flex-col p-[25px]">
+            <input
+              className="border-b border-gray-400 p-2 focus:outline-none"
+              type="text"
+              placeholder="Enter Username"
+              name="username"
+              onChange={onValueChange}
+            />
+            {error && (
+              <p className="text-[#ff6161] text-xs font-semibold mt-2">
+                Please enter valid username and password.
+              </p>
+            )}
+            <input
+              className="border-b border-gray-400 p-2 focus:outline-none mt-4"
+              type="password"
+              placeholder="Enter Password"
+              name="password"
+              onChange={onValueChange}
+            />
+            <p className="text-gray-500 text-xs mt-3">
+              By continuing, you agree to Flipkart's Terms of Use and Privacy
+              Policy.
+            </p>
+            <button
+              className="bg-[#fb641b] text-white h-[48px] rounded-md mt-4"
+              onClick={loginUser}
+            >
+              Login
+            </button>
+            <p className="text-center mt-4">OR</p>
+            <button className="bg-white text-[#2874f0] h-[48px] rounded-md mt-4 shadow-sm">
+              Request OTP
+            </button>
+            <p
+              className="text-[#2874f0] text-sm font-semibold text-center cursor-pointer mt-4"
+              onClick={toggleSignUp}
+            >
+              New to Flipkart? Create an account
+            </p>
+          </div>
+        ) : (
+          <div className="flex flex-col p-[25px]">
+            <input
+              className="border-b border-gray-400 p-2 focus:outline-none"
+              type="text"
+              placeholder="Enter Firstname"
+              name="firstname"
+              onChange={onInputChange}
+            />
+            <input
+              className="border-b border-gray-400 p-2 focus:outline-none mt-4"
+              type="text"
+              placeholder="Enter Lastname"
+              name="lastname"
+              onChange={onInputChange}
+            />
+            <input
+              className="border-b border-gray-400 p-2 focus:outline-none mt-4"
+              type="text"
+              placeholder="Enter Username"
+              name="username"
+              onChange={onInputChange}
+            />
+            <input
+              className="border-b border-gray-400 p-2 focus:outline-none mt-4"
+              type="email"
+              placeholder="Enter Email"
+              name="email"
+              onChange={onInputChange}
+            />
+            <input
+              className="border-b border-gray-400 p-2 focus:outline-none mt-4"
+              type="password"
+              placeholder="Enter Password"
+              name="password"
+              onChange={onInputChange}
+            />
+            <input
+              className="border-b border-gray-400 p-2 focus:outline-none mt-4"
+              type="text"
+              placeholder="Enter Phone"
+              name="phone"
+              onChange={onInputChange}
+            />
+            <button
+              className="bg-[#fb641b] text-white h-[48px] rounded-md mt-4"
+              onClick={signupUser}
+            >
+              Continue
+            </button>
+          </div>
+        )}
+      </div>
     </Dialog>
   );
 };
