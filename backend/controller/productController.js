@@ -1,4 +1,3 @@
-import { response } from "express";
 import Product from "../model/product.schema.js"
 
 export const getProducts = async (req, res) => {
