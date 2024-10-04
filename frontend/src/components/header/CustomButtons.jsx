@@ -5,6 +5,7 @@ import { DataContext } from "../../context/DataProvider";
 import LoginDialog from "../login/LoginDialog";
 import { Link } from "react-router-dom";
 import Profile from "./Profile";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const Wrapper = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -59,9 +60,19 @@ const CustomButtons = () => {
       )}
 
       <Typography style={{ marginTop: " 3px", width: 135 }}>
-        Become a Seller
+        <a
+          href="https://seller.flipkart.com/sell-online?utm_source=fkwebsite&utm_medium=websitedirect"
+          target="_blank"
+        >
+          {" "}
+          Become a Seller
+        </a>
       </Typography>
-      <Typography style={{ marginTop: " 3px" }}>More</Typography>
+      <Typography>
+        <Link to="/wishlist">
+          <FavoriteBorderIcon />
+        </Link>
+      </Typography>
       <Link style={{ textDecoration: "none" }} to="/cart">
         <Container>
           <ShoppingCart />
