@@ -26,7 +26,7 @@ const CartItems = ({ item }) => {
             <div className="flex flex-col gap-0.5 sm:w-3/5">
               <p className="group-hover:text-blue-500">
                 {item?.product?.title?.longTitle?.length > 42
-                  ? `${item.product.title.longTitle.substring(0, 42)}...`
+                  ? `${item.product?.title?.longTitle.substring(0, 42)}...`
                   : item?.product?.title?.longTitle}
               </p>
               <span className="text-sm text-gray-500">Seller: Unknown</span>

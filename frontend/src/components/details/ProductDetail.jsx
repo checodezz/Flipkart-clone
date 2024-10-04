@@ -1,6 +1,7 @@
 import { Table, TableBody, TableRow, TableCell } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import { useEffect } from "react";
 
 const ProductDetail = ({ product }) => {
   const fassured =
@@ -10,6 +11,10 @@ const ProductDetail = ({ product }) => {
     "https://rukminim1.flixcart.com/lockin/774/185/images/CCO__PP_2019-07-14.png?q=50";
 
   const date = new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div>

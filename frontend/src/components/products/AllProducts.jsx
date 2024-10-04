@@ -13,7 +13,9 @@ const AllProducts = () => {
   const [ratings, setRatings] = useState(null);
   const [sort, setSort] = useState(null);
   const [activePage, setCurrentPage] = useState(1);
-  const { products, filteredProducts } = useSelector((state) => state.products);
+  const { products, filteredProducts, status } = useSelector(
+    (state) => state.products
+  );
 
   const productsPerPage = 12;
 
@@ -25,6 +27,7 @@ const AllProducts = () => {
   );
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(fetchProducts());
   }, [dispatch]);
 
@@ -73,13 +76,26 @@ const AllProducts = () => {
       </div>
       {/* Products Column */}
       <div className="min-h-[100px] shadow sm:col-span-10 bg-white p-1 flex flex-col">
+        {status === "error" && products?.length === 0 && (
+          <div className="flex flex-col items-center justify-center gap-3 bg-white shadow-sm rounded-sm p-6 sm:p-16">
+            <img
+              draggable="false"
+              className="w-1/2 h-44 object-contain"
+              src="https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/error-no-search-results_2353c5.png"
+              alt="Search Not Found"
+            />
+            <h1 className="text-2xl font-medium text-gray-900">
+              Sorry, no results found!
+            </h1>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {currentProducts.map((product) => (
             <div
               key={product.id}
               className="p-4 flex flex-col hover:shadow-lg transition-shadow duration-300"
             >
-              {/* Product Image */}
               <Link
                 to={`/productDetail/${product._id}`}
                 style={{ textDecoration: "none" }}
