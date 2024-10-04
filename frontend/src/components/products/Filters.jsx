@@ -63,7 +63,7 @@ const Filters = ({
   };
 
   return (
-    <div className="min-h-[100px] shadow sm:col-span-2 bg-white">
+    <div className="">
       <div className="p-4">
         <div className="flex justify-between items-center">
           <p className="font-medium text-lg">Filters</p>
@@ -88,8 +88,13 @@ const Filters = ({
           max={maxPrice}
         />
         <div className="flex justify-between text-sm mt-1">
-          <span>{minPrice}</span>
-          <span>₹{maxPrice}</span>
+          <span className="border border-gray-300 bg-gray-100 px-6 py-1 ">
+            ₹{minPrice}
+          </span>
+          <span className="mt-1 text-gray-500">to</span>
+          <span className="border border-gray-300 bg-gray-100 px-6 py-1 ">
+            ₹{maxPrice}
+          </span>
         </div>
       </div>
 

@@ -6,6 +6,8 @@ import Home from "./components/home/Home";
 import DataProvider from "./context/DataProvider";
 import { Box } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Footer from "./components/home/Footer";
+import Cart from "./components/cart/Cart";
 
 function App() {
   return (
@@ -17,8 +19,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/productDetail/:id" element={<DetailView />} />
             <Route path="/products" element={<AllProducts />} />
+            <Route path="/cart" element={<Cart />} />
           </Routes>
         </Box>
+        <Footer />
       </BrowserRouter>
     </DataProvider>
   );

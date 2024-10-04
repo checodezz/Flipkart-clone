@@ -1,7 +1,6 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Countdown from "react-countdown";
-import { Box, Typography, Button, Divider, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const responsive = {
@@ -19,98 +18,39 @@ const responsive = {
   },
 };
 
-// Styling for the main component
-const Component = styled(Box)`
-  margin-top: 10px;
-  background-color: #ffffff;
-`;
-
-const Deal = styled(Box)`
-  padding: 15px 20px;
-  display: flex;
-`;
-
-const Timer = styled(Box)`
-  display: flex;
-  margin-left: 10px;
-  align-items: center;
-  color: #7f7f7f;
-`;
-
-const DealText = styled(Typography)`
-  font-size: 22px;
-  font-weight: 600;
-  margin-right: 25px;
-  line-height: 32px;
-`;
-
-const ViewAllButton = styled(Button)`
-  margin-left: auto;
-  background-color: #2874f0;
-  border-radius: 2px;
-  font-size: 13px;
-  font-weight: 600;
-`;
-
-const ProductContainer = styled(Box)`
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  text-align: center;
-  box-sizing: border-box;
-`;
-
-// Styling for the product image
-const Image = styled("img")({
-  width: "auto",
-  height: 150,
-  marginBottom: "10px", // Space between image and text
-});
-
-// Styling for product text
-const Text = styled(Typography)`
-  font-size: 14px;
-  margin-top: 5px;
-  line-height: 1.5;
-  word-wrap: break-word; // To prevent overflow of long text
-`;
-
 const Slide = ({ products, title, timer }) => {
   const renderer = ({ hours, minutes, seconds }) => {
     return (
-      <Box variant="span">
+      <span className="font-medium">
         {hours} : {minutes} : {seconds} Left
-      </Box>
+      </span>
     );
   };
 
   return (
-    <Component>
-      <Deal>
-        <DealText>{title}</DealText>
+    <div className="mt-3 bg-white">
+      {/* Deal Header */}
+      <div className="flex p-4 items-center">
+        <h2 className="text-xl font-medium mr-6">{title}</h2>
         {timer && (
-          <Timer>
+          <div className="flex items-center text-gray-500 ml-4">
             <img
               src="https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/timer_a73398.svg"
               alt="timer"
-              style={{ width: "24px" }}
+              className="w-6 h-6 mr-2"
             />
             <Countdown date={Date.now() + 5.04e7} renderer={renderer} />
-          </Timer>
+          </div>
         )}
-        <ViewAllButton variant="contained" color="primary">
-          <Link
-            to="/products"
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            View All
-          </Link>
-        </ViewAllButton>
-      </Deal>
-      <Divider />
+        <Link
+          to="/products"
+          className="ml-auto bg-blue-600 text-white text-sm py-2 px-4 rounded-sm hover:bg-blue-700"
+        >
+          VIEW ALL
+        </Link>
+      </div>
+      <hr className="border-t" />
+      {/* Product Carousel */}
       <Carousel
         responsive={responsive}
         swipeable={false}
@@ -123,27 +63,41 @@ const Slide = ({ products, title, timer }) => {
         dotListClass="custom-dot-list-style"
         itemClass="carousel-item-padding-40-px"
         containerClass="carousel-container"
+        customLeftArrow={
+          <button className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white shadow-lg w-10 h-20 text-xl text-black flex items-center justify-center">
+            &#8249;
+          </button>
+        }
+        customRightArrow={
+          <button className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white shadow-lg w-10 h-20 text-xl text-black flex items-center justify-center">
+            &#8250;
+          </button>
+        }
       >
         {products.map((product) => (
           <Link
             key={product._id}
             to={`productDetail/${product._id}`}
-            style={{ textDecoration: "none" }}
+            className="text-center p-4 group"
           >
-            <ProductContainer>
-              <Image src={product.url} alt="product" />
-              <Text style={{ fontWeight: 600, color: "#212121" }}>
+            <div className="flex flex-col items-center space-y-2 mx-9">
+              <img
+                src={product.url}
+                alt="product"
+                className="w-auto h-40 object-contain mb-2 transition-transform duration-300 group-hover:scale-110"
+              />
+              <span className="font-medium text-gray-900">
                 {product.title.shortTitle}
-              </Text>
-              <Text style={{ color: "green" }}>{product.discount}</Text>
-              <Text style={{ color: " #212121", opacity: 0.6 }}>
+              </span>
+              <span className="text-green-600">{product.discount}</span>
+              <span className="text-gray-700 opacity-80">
                 {product.tagline}
-              </Text>
-            </ProductContainer>
+              </span>
+            </div>
           </Link>
         ))}
       </Carousel>
-    </Component>
+    </div>
   );
 };
 

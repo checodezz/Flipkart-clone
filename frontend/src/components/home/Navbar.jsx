@@ -3,8 +3,7 @@ import { navData } from "../../constants/data";
 
 const Component = styled(Box)(({ theme }) => ({
   display: " flex",
-  margin: "65px 10px 0 10px",
-  padding: "0 50px 0 50px",
+  padding: "0 30px 0 30px",
   justifyContent: "space-between",
   overflow: "overlay",
   background: "white",
@@ -18,7 +17,7 @@ const Container = styled(Box)`
 
 const Text = styled(Typography)`
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   font-family: inherit;
 `;
 
