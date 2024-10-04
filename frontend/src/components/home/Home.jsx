@@ -6,6 +6,7 @@ import Slide from "./Slide";
 import MidSection from "./MidSection";
 import { Box, styled } from "@mui/material";
 import { useEffect } from "react";
+import Loader from "../loader/Loader"; // Import the Loader component
 
 const Component = styled(Box)`
   padding: 10px;
@@ -29,7 +30,7 @@ const getRandomProducts = (products, count) => {
 };
 
 const Home = () => {
-  const { products } = useSelector((state) => state.products);
+  const { products, status } = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,28 +50,36 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <Component>
-        <Banner />
-        <Slide
-          products={discountsForYou}
-          title="Deal of the Day"
-          timer={false}
-        />
-        <Slide
-          products={suggestedItems}
-          title="Suggested Items"
-          timer={false}
-        />
-        <MidSection />
+      {status === "loading" ? ( // Check if status is loading
+        <Loader /> // Display the Loader component when loading
+      ) : (
+        <Component>
+          <Banner />
+          <Slide
+            products={discountsForYou}
+            title="Deal of the Day"
+            timer={false}
+          />
+          <Slide
+            products={suggestedItems}
+            title="Suggested Items"
+            timer={false}
+          />
+          <MidSection />
 
-        <Slide
-          products={trendingOffers}
-          title="Trending Offers"
-          timer={false}
-        />
-        <Image src={url} alt="covid" />
-        <Slide products={topSelection} title="Suggested Items" timer={false} />
-      </Component>
+          <Slide
+            products={trendingOffers}
+            title="Trending Offers"
+            timer={false}
+          />
+          <Image src={url} alt="covid" />
+          <Slide
+            products={topSelection}
+            title="Suggested Items"
+            timer={false}
+          />
+        </Component>
+      )}
     </>
   );
 };
