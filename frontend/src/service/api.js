@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const URL = "https://flipkart-clone-rose-sigma.vercel.app"
+const URL = import.meta.env.VITE_API_URL
 export const authenticateSignup = async (data) => {
     try {
         return await axios.post(`${URL}/signup`, data)

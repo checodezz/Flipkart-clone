@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const url = "https://flipkart-clone-rose-sigma.vercel.app"
+const url = import.meta.env.VITE_API_URL
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", async () => {
     const response = await axios.get(`${url}/products`);
