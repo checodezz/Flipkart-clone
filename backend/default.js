@@ -1,4 +1,4 @@
-import { products } from "./constants/data.js"
+// import { products } from "./constants/data.js"
 import Product from "./model/product.schema.js"
 
 const defaultData = async () => {
