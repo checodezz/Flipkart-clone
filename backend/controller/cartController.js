@@ -27,18 +27,14 @@ export const updateCart = async (req, res) => {
             await cartItem.save();
             return res.status(200).json({ message: 'Cart updated', cartItem });
         } else {
-            // Add new product to cart
             const product = await Product.findById(productId);
-
             if (!product) {
                 return res.status(404).json({ message: 'Product not found' });
             }
-
             const newCartItem = new Cart({
                 product: productId,
                 quantity: 1,
             });
-
             await newCartItem.save();
             return res.status(201).json({ message: 'Product added to cart', newCartItem });
         }
@@ -49,16 +45,12 @@ export const updateCart = async (req, res) => {
 
 export const removeCartItem = async (req, res) => {
     const { productId } = req.body;
-
     try {
         const cartItem = await Cart.findOne({ product: productId });
-
         if (!cartItem) {
             return res.status(404).json({ message: 'Cart item not found' });
         }
-
         await Cart.deleteOne({ product: productId });
-
         return res.status(200).json({ message: 'Product removed from cart' });
     } catch (error) {
         return res.status(500).json({ message: 'Server error', error });
