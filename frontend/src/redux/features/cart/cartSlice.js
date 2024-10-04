@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const url = "http://localhost:3000";
+const url = "https://flipkart-clone-rose-sigma.vercel.app";
 
 export const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
     try {
