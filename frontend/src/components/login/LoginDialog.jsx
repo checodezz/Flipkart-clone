@@ -37,7 +37,7 @@ const LoginDialog = ({ open, setOpen }) => {
   const [error, setError] = useState(false);
   const { setAccount } = useContext(DataContext);
 
-  const handleClose = () => {
+  const handleClose = (e) => {
     setOpen(false);
     toggleAccount(accountInitialValues.login);
     setError(false);
@@ -63,7 +63,8 @@ const LoginDialog = ({ open, setOpen }) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
   };
 
-  const loginUser = async () => {
+  const loginUser = async (e) => {
+    e.preventDefault();
     const response = await authenticateLogin(login);
     console.log(response.data.data);
     if (response.status === 200) {

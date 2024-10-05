@@ -14,6 +14,7 @@ import CustomButtons from "./CustomButtons";
 import { Link } from "react-router-dom";
 import { Menu } from "@mui/icons-material";
 import { useState } from "react";
+import { LOGO_URL, SUB_URL } from "../../constants/data";
 
 const StyledHeader = styled(AppBar)`
   background: #2874f0;
@@ -54,11 +55,6 @@ const MenuButton = styled(IconButton)(({ theme }) => ({
 }));
 
 const Header = () => {
-  const LOGO_URL =
-    "https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/flipkart-plus_8d85f4.png";
-  const SUB_URL =
-    "https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/plus_aef861.png";
-
   const [open, setOpen] = useState(false);
 
   const handleOpenDrawer = () => {

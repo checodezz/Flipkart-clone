@@ -22,3 +22,17 @@ export const midSectionImageUrl = [
     'https://rukminim1.flixcart.com/flap/960/960/image/084789479074d2b2.jpg',
     'https://rukminim1.flixcart.com/flap/960/960/image/1ce0c4c1fb501b45.jpg?q=50'
 ];
+
+export const LOGO_URL = "https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/flipkart-plus_8d85f4.png"
+
+export const SUB_URL = "https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/plus_aef861.png"
+
+export const BECOME_SELLER_URL = "https://seller.flipkart.com/sell-online?utm_source=fkwebsite&utm_medium=websitedirect"
+
+export const NOTIFICATION_PREF_URL = "https://www.flipkart.com/communication-preferences/push"
+
+export const CUSTOMER_CARE = "https://www.flipkart.com/helpcentre"
+
+export const ADVERTISE_ON_FLIPKART = "https://advertising.flipkart.com/login?returl=/"
+
+export const DOWNLOAD_APP_URL = "https://www.flipkart.com/mobile-apps"
