@@ -6,20 +6,21 @@ import { fetchProducts } from "../../redux/features/products/productSlice";
 import { Link } from "react-router-dom";
 const SearchContainer = styled(Box)`
   background: #fff;
-  width: 38%;
+  width: 45%;
   border-radius: 2px;
   margin-left: 15px;
   display: flex;
 `;
 
 const InputSearchBase = styled(InputBase)`
+  padding-top: 3px;
   padding-left: 20px;
   width: 100%;
-  font-size: 13px;
+  font-size: 14px;
 `;
 
 const SearchIconWrapper = styled(Box)`
-  color: lightgrey;
+  color: lightgray;
   padding: 5px;
   margin-top: 3px;
   margin-right: 10px;
