@@ -19,6 +19,7 @@ import {
   Download,
   ExitToApp,
   AccountCircle,
+  Favorite, // Importing the Favorite icon
 } from "@mui/icons-material";
 import { DataContext } from "../../context/DataProvider";
 import LoginDialog from "../login/LoginDialog";
@@ -159,6 +160,24 @@ const CustomButtons = () => {
                 />
                 Sell on Flipkart
               </a>
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={handleDropdownClose}>
+              <Link
+                to="/wishlist" // Link to the wishlist
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <Favorite // Favorite icon for wishlist
+                  fontSize="small"
+                  sx={{ color: "blue", marginRight: 1 }}
+                />
+                Wishlist
+              </Link>
             </MenuItem>
             <Divider />
             <MenuItem onClick={handleDropdownClose}>

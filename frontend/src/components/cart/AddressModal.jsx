@@ -22,10 +22,11 @@ const AddressModal = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center pt-16">
+      <div className="bg-white p-6 rounded-sm shadow-lg w-full max-w-sm">
+        {" "}
+        {/* Changed max-w-md to max-w-sm */}
         <h2 className="text-lg font-semibold mb-4">Add New Address</h2>
-
         <form onSubmit={handleSubmit}>
           {/* Name Field */}
           <div className="mb-3">
