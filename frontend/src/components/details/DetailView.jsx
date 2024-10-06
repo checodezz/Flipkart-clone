@@ -5,17 +5,27 @@ import { fetchProductsById } from "../../redux/features/products/productDetailSl
 import ActionItem from "./ActionItem";
 import ProductDetail from "./ProductDetail";
 import Loader from "../loader/Loader";
+import Slide from "../home/Slide";
+import { fetchProducts } from "../../redux/features/products/productSlice";
+import { PRODUCT_DETAILS_BANNER } from "../../constants/data";
 
 const DetailView = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { status, product } = useSelector((state) => state.productDetail);
-
+  const { products } = useSelector((state) => state.products);
+  console.log(products);
   useEffect(() => {
     if (id !== product?._id) {
       dispatch(fetchProductsById(id));
     }
   }, [dispatch, id, product]);
+
+  useEffect(() => {
+    if (!products.length) {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, products]);
 
   return (
     <div className="bg-gray-100 mt-[55px]">
@@ -37,6 +47,17 @@ const DetailView = () => {
           </div>
         )
       )}
+
+      <img src={PRODUCT_DETAILS_BANNER} alt="banner" className="mt-3 mx-2" />
+      <div className="mb-3 mx-2">
+        {products && products.length > 0 && (
+          <Slide
+            products={products}
+            title="You might be interested in"
+            timer={false}
+          />
+        )}
+      </div>
     </div>
   );
 };

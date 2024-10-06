@@ -1,36 +1,15 @@
-import { Box, styled, Typography } from "@mui/material";
 import { navData } from "../../constants/data";
-
-const Component = styled(Box)(({ theme }) => ({
-  display: " flex",
-  padding: "0 30px 0 30px",
-  justifyContent: "space-between",
-  overflow: "overlay",
-  background: "white",
-  [theme.breakpoints.down("lg")]: { margin: 0 },
-}));
-
-const Container = styled(Box)`
-  padding: 12px 8px;
-  text-align: center;
-`;
-
-const Text = styled(Typography)`
-  font-size: 14px;
-  font-weight: 500;
-  font-family: inherit;
-`;
 
 const Navbar = () => {
   return (
-    <Component>
+    <div className="flex justify-between bg-white py-3 px-4 lg:px-8 w-full overflow-x-auto ">
       {navData.map((data) => (
-        <Container key={data.url}>
-          <img src={data.url} alt="nav" style={{ width: "64px" }} />
-          <Text>{data.text}</Text>
-        </Container>
+        <div key={data.url} className="text-center p-2 flex-shrink-0">
+          <img src={data.url} alt="nav" className="w-16" />
+          <p className="text-sm font-medium">{data.text}</p>
+        </div>
       ))}
-    </Component>
+    </div>
   );
 };
 

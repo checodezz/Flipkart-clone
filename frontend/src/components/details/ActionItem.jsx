@@ -10,8 +10,10 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { enqueueSnackbar } from "notistack";
+import Cart from "../cart/Cart";
 
 const ActionItem = ({ product }) => {
+  console.log(product);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -33,6 +35,12 @@ const ActionItem = ({ product }) => {
       setIsAddingToCart(false);
       navigate("/cart");
     }, 1000);
+  };
+
+  const handleBuyNow = (product) => {
+    if (product) {
+      navigate("/cart", { state: { product } });
+    }
   };
 
   const handleWishlistClick = () => {
@@ -81,7 +89,10 @@ const ActionItem = ({ product }) => {
           <ShoppingCartIcon className="mr-2" />
           {isAddingToCart ? "Going to Cart..." : "Add to Cart"}
         </button>
-        <button className="flex items-center justify-center w-[48%] h-12 rounded-sm bg-orange-500 text-white hover:bg-red-700 transition duration-200">
+        <button
+          className="flex items-center justify-center w-[48%] h-12 rounded-sm bg-orange-500 text-white hover:bg-red-700 transition duration-200"
+          onClick={() => handleBuyNow(product)}
+        >
           <FlashOnIcon className="mr-2" />
           Buy Now
         </button>

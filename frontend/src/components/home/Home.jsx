@@ -75,7 +75,7 @@ const Home = () => {
           <Image src={url} alt="covid" />
           <Slide
             products={topSelection}
-            title="Suggested Items"
+            title="Flipkart Choice"
             timer={false}
           />
         </Component>

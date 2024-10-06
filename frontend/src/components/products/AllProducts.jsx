@@ -136,7 +136,7 @@ const AllProducts = () => {
           ))}
         </div>
         {/* Pagination Component */}
-        <hr />
+        <hr className="mt-3" />
         <PaginationComponent
           activePage={activePage}
           itemsCountPerPage={productsPerPage}
