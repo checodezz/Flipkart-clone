@@ -48,7 +48,7 @@ const DetailView = () => {
         )
       )}
 
-      <img src={PRODUCT_DETAILS_BANNER} alt="banner" className="mt-3 mx-2" />
+      <img src={PRODUCT_DETAILS_BANNER} alt="banner" className="mt-3 px-2" />
       <div className="mb-3 mx-2">
         {products && products.length > 0 && (
           <Slide

@@ -1,7 +1,7 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Countdown from "react-countdown";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const responsive = {
   desktop: {
@@ -19,6 +19,12 @@ const responsive = {
 };
 
 const Slide = ({ products, title, timer }) => {
+  const navigate = useNavigate();
+
+  const handleProductClick = (productId) => {
+    navigate(`/productDetail/${productId}`);
+  };
+
   const renderer = ({ hours, minutes, seconds }) => {
     return (
       <span className="font-medium">
@@ -76,9 +82,9 @@ const Slide = ({ products, title, timer }) => {
         }
       >
         {products.map((product) => (
-          <Link
+          <div
             key={product._id}
-            to={`productDetail/${product._id}`}
+            onClick={() => handleProductClick(product._id)}
             className="text-center p-4 group"
           >
             <div className="flex flex-col items-center space-y-2 mx-9">
@@ -95,7 +101,7 @@ const Slide = ({ products, title, timer }) => {
                 {product.tagline}
               </span>
             </div>
-          </Link>
+          </div>
         ))}
       </Carousel>
     </div>

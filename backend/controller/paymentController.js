@@ -10,11 +10,11 @@ export const paymentSuccess = async (req, res) => {
         const options = req.body;
         const order = await razorpay.orders.create(options);
         if (!order) {
-            return res.status(500).send("Error");
+            return res.status(500).json(error);
         }
         res.json(order)
     } catch (error) {
         console.log(error);
-        return res.status(500).send("Error");
+        return res.status(500).json(error);
     }
 }
