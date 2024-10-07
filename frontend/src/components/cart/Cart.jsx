@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCart } from "../../redux/features/cart/cartSlice";
+import { clearCart, fetchCart } from "../../redux/features/cart/cartSlice";
 import CartItems from "./CartItems";
 import CartPriceDetails from "./CartPriceDetails";
 import AddressModal from "./AddressModal";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Cart = () => {
   const [showModal, setShowModal] = useState(false);
@@ -16,17 +17,18 @@ const Cart = () => {
   ]);
   const [selectedAddress, setSelectedAddress] = useState(1);
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize navigate
   const { cartItems, totalCost } = useSelector((state) => state.cart);
   console.log(totalCost);
 
   useEffect(() => {
-    dispatch(fetchCart()); // Fetch cart items if no product is passed
+    dispatch(fetchCart());
   }, [dispatch]);
 
-  const paymentHandler = async () => {
+  const paymentHandler = async (e) => {
     const url = import.meta.env.VITE_API_URL;
 
-    const amount = totalCost;
+    const amount = totalCost * 100;
     const currency = "INR";
     const response = await fetch(`${url}/order`, {
       method: "POST",
@@ -40,6 +42,44 @@ const Cart = () => {
     });
     const order = await response.json();
     console.log(order);
+
+    var options = {
+      key: "rzp_test_fusJ47nYJrGOyT",
+      amount,
+      currency,
+      name: "Flipkart", // your business name
+      description: "Test Transaction",
+      image:
+        "https://seeklogo.com/images/F/flipkart-logo-C9E637A758-seeklogo.com.png",
+      order_id: order.id,
+      handler: function (response) {
+        dispatch(clearCart());
+        navigate("/success");
+      },
+      prefill: {
+        name: "Gaurav Kumar", // Customer's name
+        email: "gaurav.kumar@example.com",
+        contact: "9000090000", // Customer's phone number
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var rzp1 = new window.Razorpay(options);
+    rzp1.on("payment.failed", function (response) {
+      alert(response.error.code);
+      alert(response.error.description);
+      alert(response.error.source);
+      alert(response.error.step);
+      alert(response.error.reason);
+      alert(response.error.metadata.order_id);
+      alert(response.error.metadata.payment_id);
+    });
+    rzp1.open();
+    e.preventDefault();
   };
 
   const handleAddAddressClick = () => {
@@ -112,10 +152,7 @@ const Cart = () => {
       </div>
 
       <div className="flex sticky top-16 sm:h-screen flex-col sm:w-4/12 sm:px-1">
-        {/* Only show CartPriceDetails when the modal is not open */}
-        {!showModal && (
-          <CartPriceDetails cartItems={cartItems} /> // Update price details
-        )}
+        {!showModal && <CartPriceDetails cartItems={cartItems} />}
       </div>
     </div>
   );
