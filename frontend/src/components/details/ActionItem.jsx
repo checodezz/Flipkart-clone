@@ -42,7 +42,7 @@ const ActionItem = ({ product }) => {
           autoHideDuration: 1000,
         });
         setIsAddingToCart(false);
-        setIsInCart(true);
+        setIsInCart(true); // Marks product as in cart after addition
       })
       .catch(() => {
         setIsAddingToCart(false);
@@ -54,15 +54,19 @@ const ActionItem = ({ product }) => {
   };
 
   const handleBuyNow = (product) => {
-    dispatch(updateCart({ productId: product._id, action: "plus" })).then(
-      () => {
-        enqueueSnackbar("Item added to cart", {
-          variant: "success",
-          autoHideDuration: 1000,
-        });
-        navigate("/cart");
-      }
-    );
+    if (isInCart) {
+      navigate("/cart");
+    } else {
+      dispatch(updateCart({ productId: product._id, action: "plus" })).then(
+        () => {
+          enqueueSnackbar("Item added to cart", {
+            variant: "success",
+            autoHideDuration: 1000,
+          });
+          navigate("/cart");
+        }
+      );
+    }
   };
 
   const handleWishlistClick = () => {
