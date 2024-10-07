@@ -294,6 +294,17 @@ const CustomButtons = () => {
             <CartBadge>{cartItemsCount}</CartBadge> // Display cart count
           )}
         </CartIconWrapper>
+        <Typography
+          variant="body2" // Adjust the variant as needed
+          sx={{
+            marginRight: 1,
+            color: "white",
+            paddingLeft: 1,
+            fontWeight: 600,
+          }} // Change color as necessary
+        >
+          Cart
+        </Typography>
       </Link>
 
       <LoginDialog open={open} setOpen={setOpen} />

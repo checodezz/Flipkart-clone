@@ -23,10 +23,8 @@ const ActionItem = ({ product }) => {
     dispatch(fetchCart()); // Fetch the cart when the component is loaded or updated
   }, [dispatch]);
 
-  // Check if the product is in the wishlist
   const isInWishlist = wishlistItems.some((item) => item._id === product._id);
 
-  // Check if the product is in the cart and update the state accordingly
   useEffect(() => {
     const productInCart = cartItems.some(
       (cartItem) => cartItem.product._id === product._id
@@ -34,7 +32,6 @@ const ActionItem = ({ product }) => {
     setIsInCart(productInCart);
   }, [cartItems, product]);
 
-  // Handle adding product to the cart
   const handleAddtoCart = (productAction) => {
     setIsAddingToCart(true);
 
@@ -109,7 +106,7 @@ const ActionItem = ({ product }) => {
             className="flex items-center justify-center w-[48%] h-12 rounded-sm text-white bg-green-500 hover:bg-green-600 transition duration-200"
           >
             <ShoppingCartIcon className="mr-2" />
-            Go to Cart
+            <span className="text-lg md:text-base sm:text-sm">Go to Cart</span>
           </button>
         ) : (
           <button
@@ -121,7 +118,9 @@ const ActionItem = ({ product }) => {
             disabled={isAddingToCart}
           >
             <ShoppingCartIcon className="mr-2" />
-            {isAddingToCart ? "Adding to Cart..." : "Add to Cart"}
+            <span className="text-lg md:text-base sm:text-sm">
+              {isAddingToCart ? "Adding to Cart..." : "Add to Cart"}
+            </span>
           </button>
         )}
         <button
@@ -129,7 +128,7 @@ const ActionItem = ({ product }) => {
           onClick={() => handleBuyNow(product)}
         >
           <FlashOnIcon className="mr-2" />
-          Buy Now
+          <span className="text-lg md:text-base sm:text-sm">Buy Now</span>
         </button>
       </div>
     </div>

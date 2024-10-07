@@ -115,12 +115,12 @@ const Filters = ({
               <input
                 type="checkbox"
                 id={category}
-                className="m-2"
+                className="m-2 "
                 value={category}
                 checked={selectedCategories.includes(category)}
                 onChange={handleCategoryChange}
               />
-              <label htmlFor={category} className="text-sm">
+              <label htmlFor={category} className="text-sm cursor-pointer">
                 {category}
               </label>
             </div>
@@ -153,7 +153,7 @@ const Filters = ({
               />
               <label
                 htmlFor={`rating-${star}`}
-                className="text-sm flex items-center"
+                className="text-sm flex items-center  cursor-pointer"
               >
                 {star} <StarIcon fontSize="small" className="ml-1" /> &nbsp; &
                 above
@@ -186,7 +186,7 @@ const Filters = ({
                 checked={sort === "low-to-high"}
                 className="m-2"
               />
-              <label htmlFor="low-to-high" className="text-sm">
+              <label htmlFor="low-to-high" className="text-sm cursor-pointer">
                 Low to High
               </label>
             </div>
@@ -200,7 +200,7 @@ const Filters = ({
                 checked={sort === "high-to-low"}
                 className="m-2"
               />
-              <label htmlFor="high-to-low" className="text-sm">
+              <label htmlFor="high-to-low" className="text-sm cursor-pointer">
                 High to Low
               </label>
             </div>
