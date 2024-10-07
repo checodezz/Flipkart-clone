@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Footer from "./components/home/Footer";
 import Cart from "./components/cart/Cart";
 import Wishlist from "./components/wishlist/Wishlist";
+import OrderSuccess from "./components/payments/OrderSuccess";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/products" element={<AllProducts />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/success" element={<OrderSuccess />} />
           </Routes>
         </Box>
         <Footer />

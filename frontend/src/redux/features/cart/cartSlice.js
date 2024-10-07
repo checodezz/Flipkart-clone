@@ -34,6 +34,16 @@ export const removeCart = createAsyncThunk("cart/removeCart", async (productId) 
     }
 });
 
+export const clearCartFromBackend = createAsyncThunk("cart/clearCartFromBackend", async () => {
+    try {
+        const response = await axios.delete(`${url}/cart/clear`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw new Error(error.response?.data?.message || "Failed to clear the cart");
+    }
+});
+
 const cartSlice = createSlice({
     name: "cart",
     initialState: {
@@ -72,6 +82,10 @@ const cartSlice = createSlice({
         setTotalCost(state, action) {
             console.log(action.payload)
             state.totalCost = action.payload
+        },
+        clearCart(state) {
+            state.cartItems = [];
+            state.totalCost = 0
         }
     },
     extraReducers: (builder) => {
@@ -82,7 +96,7 @@ const cartSlice = createSlice({
             })
             .addCase(fetchCart.fulfilled, (state, action) => {
                 state.loading = false;
-                state.cartItems = action.payload;  // Populate the cartItems array with data from the backend
+                state.cartItems = action.payload;
             })
             .addCase(fetchCart.rejected, (state, action) => {
                 state.loading = false;
@@ -123,9 +137,22 @@ const cartSlice = createSlice({
             .addCase(removeCart.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
+            })
+            .addCase(clearCartFromBackend.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(clearCartFromBackend.fulfilled, (state) => {
+                state.loading = false;
+                state.cartItems = [];
+                state.totalCost = 0;
+            })
+            .addCase(clearCartFromBackend.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
             });
     }
 });
 
-export const { optimisticUpdate, revertUpdate, setTotalCost } = cartSlice.actions;
+export const { optimisticUpdate, revertUpdate, setTotalCost, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -19,11 +19,12 @@ import {
   Download,
   ExitToApp,
   AccountCircle,
-  Favorite, // Importing the Favorite icon
+  Favorite,
 } from "@mui/icons-material";
+import { useSelector } from "react-redux"; // Assuming you're using Redux for cart
+import { Link } from "react-router-dom";
 import { DataContext } from "../../context/DataProvider";
 import LoginDialog from "../login/LoginDialog";
-import { Link } from "react-router-dom";
 import Profile from "./Profile";
 import {
   ADVERTISE_ON_FLIPKART,
@@ -34,6 +35,7 @@ import {
 } from "../../constants/data";
 import { useTheme } from "@mui/material/styles";
 
+// Styled component for wrapping buttons
 const Wrapper = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
@@ -59,6 +61,7 @@ const Wrapper = styled(Box)(({ theme }) => ({
   },
 }));
 
+// Login button style
 const LoginButton = styled(Button)`
   text-transform: none;
   padding: 5px 30px;
@@ -66,6 +69,27 @@ const LoginButton = styled(Button)`
   box-shadow: none;
   height: 32px;
   font-weight: 550;
+`;
+
+// Styled component for the cart icon wrapper
+const CartIconWrapper = styled(Box)`
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+`;
+
+// Styled component for the cart item count badge
+const CartBadge = styled("span")`
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 1px 6px;
+  font-size: 12px;
+  font-weight: bold;
 `;
 
 const CustomButtons = () => {
@@ -88,6 +112,9 @@ const CustomButtons = () => {
     setAccount(null);
     handleDropdownClose();
   };
+
+  // Getting the number of items in the cart from Redux store
+  const cartItemsCount = useSelector((state) => state.cart.cartItems.length);
 
   return (
     <Wrapper>
@@ -164,7 +191,7 @@ const CustomButtons = () => {
             <Divider />
             <MenuItem onClick={handleDropdownClose}>
               <Link
-                to="/wishlist" // Link to the wishlist
+                to="/wishlist"
                 style={{
                   textDecoration: "none",
                   color: "inherit",
@@ -172,7 +199,7 @@ const CustomButtons = () => {
                   alignItems: "center",
                 }}
               >
-                <Favorite // Favorite icon for wishlist
+                <Favorite
                   fontSize="small"
                   sx={{ color: "blue", marginRight: 1 }}
                 />
@@ -261,8 +288,12 @@ const CustomButtons = () => {
           alignItems: "center",
         }}
       >
-        <ShoppingCart />
-        <Typography>Cart</Typography>
+        <CartIconWrapper>
+          <ShoppingCart />
+          {cartItemsCount > 0 && (
+            <CartBadge>{cartItemsCount}</CartBadge> // Display cart count
+          )}
+        </CartIconWrapper>
       </Link>
 
       <LoginDialog open={open} setOpen={setOpen} />
