@@ -141,7 +141,7 @@ const CustomButtons = () => {
             variant="text"
             endIcon={<ArrowDropDown />}
             onClick={handleDropdownOpen}
-            style={{ textTransform: "none", color: "white" }}
+            style={{ textTransform: "none", color: "white", fontWeight: 600 }}
           >
             More
           </Button>
@@ -299,7 +299,7 @@ const CustomButtons = () => {
           sx={{
             marginRight: 1,
             color: "white",
-            paddingLeft: 1,
+            paddingLeft: 0.5,
             fontWeight: 600,
           }} // Change color as necessary
         >
