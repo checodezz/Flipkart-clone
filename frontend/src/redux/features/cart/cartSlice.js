@@ -38,6 +38,7 @@ const cartSlice = createSlice({
     name: "cart",
     initialState: {
         cartItems: [],
+        totalCost: null,
         loading: false,
         error: null
     },
@@ -68,6 +69,10 @@ const cartSlice = createSlice({
             const { previousState } = action.payload;
             state.cartItems = previousState.cartItems;
         },
+        setTotalCost(state, action) {
+            console.log(action.payload)
+            state.totalCost = action.payload
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -122,5 +127,5 @@ const cartSlice = createSlice({
     }
 });
 
-export const { optimisticUpdate, revertUpdate } = cartSlice.actions;
+export const { optimisticUpdate, revertUpdate, setTotalCost } = cartSlice.actions;
 export default cartSlice.reducer;

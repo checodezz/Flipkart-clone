@@ -1,51 +1,76 @@
 import { useDispatch, useSelector } from "react-redux";
-import { updateCart } from "../../redux/features/cart/cartSlice";
+import { updateCart, fetchCart } from "../../redux/features/cart/cartSlice";
 import {
   addToWishlist,
   removeFromWishlist,
 } from "../../redux/features/wishlist/wishlistSlice";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { enqueueSnackbar } from "notistack";
-import Cart from "../cart/Cart";
 
 const ActionItem = ({ product }) => {
-  console.log(product);
+  const [isInCart, setIsInCart] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { wishlistItems } = useSelector((state) => state.wishlist);
-
+  const { cartItems } = useSelector((state) => state.cart);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
 
-  // Update isInWishlist based on the latest wishlistItems
+  useEffect(() => {
+    dispatch(fetchCart()); // Fetch the cart when the component is loaded or updated
+  }, [dispatch]);
+
+  // Check if the product is in the wishlist
   const isInWishlist = wishlistItems.some((item) => item._id === product._id);
 
+  // Check if the product is in the cart and update the state accordingly
+  useEffect(() => {
+    const productInCart = cartItems.some(
+      (cartItem) => cartItem.product._id === product._id
+    );
+    setIsInCart(productInCart);
+  }, [cartItems, product]);
+
+  // Handle adding product to the cart
   const handleAddtoCart = (productAction) => {
     setIsAddingToCart(true);
-    dispatch(updateCart(productAction));
-    enqueueSnackbar("Item added to cart", {
-      variant: "success",
-      autoHideDuration: 1000,
-    });
 
-    setTimeout(() => {
-      setIsAddingToCart(false);
-      navigate("/cart");
-    }, 1000);
+    dispatch(updateCart(productAction))
+      .then(() => {
+        enqueueSnackbar("Item added to cart", {
+          variant: "success",
+          autoHideDuration: 1000,
+        });
+        setIsAddingToCart(false);
+        setIsInCart(true);
+      })
+      .catch(() => {
+        setIsAddingToCart(false);
+      });
+  };
+
+  const handleGoToCart = () => {
+    navigate("/cart");
   };
 
   const handleBuyNow = (product) => {
-    if (product) {
-      navigate("/cart", { state: { product } });
-    }
+    dispatch(updateCart({ productId: product._id, action: "plus" })).then(
+      () => {
+        enqueueSnackbar("Item added to cart", {
+          variant: "success",
+          autoHideDuration: 1000,
+        });
+        navigate("/cart");
+      }
+    );
   };
 
   const handleWishlistClick = () => {
     if (isInWishlist) {
-      dispatch(removeFromWishlist(product._id)); // Pass product._id instead of product
+      dispatch(removeFromWishlist(product._id));
       enqueueSnackbar("Item removed from wishlist", {
         variant: "warning",
         autoHideDuration: 1000,
@@ -78,17 +103,27 @@ const ActionItem = ({ product }) => {
       </div>
 
       <div className="flex gap-2 mt-4 w-full max-w-[90%] justify-between">
-        <button
-          onClick={() =>
-            handleAddtoCart({ productId: product._id, action: "plus" })
-          }
-          className="flex items-center justify-center w-[48%] h-12 rounded-sm text-white hover:bg-yellow-600 transition duration-200"
-          style={{ background: "#ff9f00" }}
-          disabled={isAddingToCart}
-        >
-          <ShoppingCartIcon className="mr-2" />
-          {isAddingToCart ? "Going to Cart..." : "Add to Cart"}
-        </button>
+        {isInCart ? (
+          <button
+            onClick={handleGoToCart}
+            className="flex items-center justify-center w-[48%] h-12 rounded-sm text-white bg-green-500 hover:bg-green-600 transition duration-200"
+          >
+            <ShoppingCartIcon className="mr-2" />
+            Go to Cart
+          </button>
+        ) : (
+          <button
+            onClick={() =>
+              handleAddtoCart({ productId: product._id, action: "plus" })
+            }
+            className="flex items-center justify-center w-[48%] h-12 rounded-sm text-white hover:bg-yellow-600 transition duration-200"
+            style={{ background: "#ff9f00" }}
+            disabled={isAddingToCart}
+          >
+            <ShoppingCartIcon className="mr-2" />
+            {isAddingToCart ? "Adding to Cart..." : "Add to Cart"}
+          </button>
+        )}
         <button
           className="flex items-center justify-center w-[48%] h-12 rounded-sm bg-orange-500 text-white hover:bg-red-700 transition duration-200"
           onClick={() => handleBuyNow(product)}

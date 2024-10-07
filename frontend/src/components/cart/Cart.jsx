@@ -4,12 +4,8 @@ import { fetchCart } from "../../redux/features/cart/cartSlice";
 import CartItems from "./CartItems";
 import CartPriceDetails from "./CartPriceDetails";
 import AddressModal from "./AddressModal";
-import { useLocation } from "react-router-dom";
 
 const Cart = () => {
-  const location = useLocation();
-  const product = location.state?.product; // Access the product from state
-  console.log(product);
   const [showModal, setShowModal] = useState(false);
   const [addresses, setAddresses] = useState([
     {
@@ -20,17 +16,30 @@ const Cart = () => {
   ]);
   const [selectedAddress, setSelectedAddress] = useState(1);
   const dispatch = useDispatch();
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cartItems, totalCost } = useSelector((state) => state.cart);
+  console.log(totalCost);
 
   useEffect(() => {
-    if (!product) {
-      dispatch(fetchCart()); // Fetch cart items if no product is passed
-    }
-  }, [dispatch, product]);
+    dispatch(fetchCart()); // Fetch cart items if no product is passed
+  }, [dispatch]);
 
-  const handlePlaceOrderClick = () => {
-    // Logic for placing the order
-    console.log("Order placed for:", product || cartItems);
+  const paymentHandler = async () => {
+    const url = import.meta.env.VITE_API_URL;
+
+    const amount = totalCost;
+    const currency = "INR";
+    const response = await fetch(`${url}/order`, {
+      method: "POST",
+      body: JSON.stringify({
+        amount,
+        currency,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const order = await response.json();
+    console.log(order);
   };
 
   const handleAddAddressClick = () => {
@@ -81,22 +90,18 @@ const Cart = () => {
 
         <div className="flex flex-col shadow bg-white">
           <span className="font-medium text-lg px-2 sm:px-8 py-4 border-b">
-            My Cart {product ? "(1 item)" : `(${cartItems.length} items)`}{" "}
+            My Cart ({cartItems.length} items)
           </span>
-          {product ? (
-            <CartItems item={product} /> // Render product if passed
-          ) : (
-            cartItems.map((item) => <CartItems key={item._id} item={item} />) // Render cart items if no product
-          )}
+          <CartItems items={cartItems} />
           <div className="flex justify-end">
             <button
-              disabled={!product && cartItems.length < 1} // Disable if there are no items
+              disabled={cartItems.length < 1} // Disable if there are no items
               className={`${
-                !product && cartItems.length < 1
+                cartItems.length < 1
                   ? "bg-gray-600 cursor-not-allowed"
                   : "bg-orange-500"
               } w-full sm:w-1/3 mx-2 sm:mx-6 my-4 py-3 font-medium text-white shadow hover:shadow-lg rounded-sm`}
-              onClick={handlePlaceOrderClick}
+              onClick={paymentHandler}
             >
               PLACE ORDER
             </button>
@@ -109,7 +114,7 @@ const Cart = () => {
       <div className="flex sticky top-16 sm:h-screen flex-col sm:w-4/12 sm:px-1">
         {/* Only show CartPriceDetails when the modal is not open */}
         {!showModal && (
-          <CartPriceDetails cartItems={product ? [product] : cartItems} /> // Update price details
+          <CartPriceDetails cartItems={cartItems} /> // Update price details
         )}
       </div>
     </div>
