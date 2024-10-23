@@ -27,7 +27,7 @@ export const updateCart = createAsyncThunk("cart/updateCart", async ({ productId
 export const removeCart = createAsyncThunk("cart/removeCart", async (productId) => {
     try {
         const response = await axios.post(`${url}/cart/remove`, { productId });
-        return { productId };  // Return the productId for removal in the reducer
+        return { productId };
     } catch (error) {
         console.log(error);
         throw new Error(error.response?.data?.message || "Failed to remove product from cart");
@@ -53,7 +53,6 @@ const cartSlice = createSlice({
         error: null
     },
     reducers: {
-        // Optimistically update the cart when the user triggers an action
         optimisticUpdate(state, action) {
             const { productId, actionType } = action.payload;
             const cartItem = state.cartItems.find((item) => item.product._id === productId);
@@ -63,19 +62,17 @@ const cartSlice = createSlice({
                     cartItem.quantity += 1;
                 } else {
                     state.cartItems.push({
-                        product: { _id: productId }, // Temporary product data, backend will send full details
+                        product: { _id: productId },
                         quantity: 1,
                     });
                 }
             } else if (actionType === 'minus' && cartItem && cartItem.quantity > 1) {
                 cartItem.quantity -= 1;
             } else if (actionType === 'remove') {
-                // Remove the item from the cartItems array
                 state.cartItems = state.cartItems.filter(item => item.product._id !== productId);
             }
         },
         revertUpdate(state, action) {
-            // If the API call fails, revert the cart item to its previous state
             const { previousState } = action.payload;
             state.cartItems = previousState.cartItems;
         },
@@ -124,7 +121,6 @@ const cartSlice = createSlice({
                 state.error = action.payload;
             })
 
-            // Handle removeCart action
             .addCase(removeCart.pending, (state) => {
                 state.loading = true;
                 state.error = null;

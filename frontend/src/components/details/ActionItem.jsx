@@ -20,7 +20,7 @@ const ActionItem = ({ product }) => {
   const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchCart()); // Fetch the cart when the component is loaded or updated
+    dispatch(fetchCart());
   }, [dispatch]);
 
   const isInWishlist = wishlistItems.some((item) => item._id === product._id);
@@ -42,7 +42,7 @@ const ActionItem = ({ product }) => {
           autoHideDuration: 1000,
         });
         setIsAddingToCart(false);
-        setIsInCart(true); // Marks product as in cart after addition
+        setIsInCart(true);
       })
       .catch(() => {
         setIsAddingToCart(false);
